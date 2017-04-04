@@ -1,8 +1,31 @@
 import fs from 'fs';
 import { exec } from 'child_process';
 
-function createDirectory(component) {
-  exec('mkdir ' + component, (err, stdout) => {
+function getComponentPath(componentPath) {
+    let res = ''
+
+    if (componentPath.indexOf('.') !== 0) {
+	    if (componentPath.indexOf('/') !== 0) {
+		    res += './'
+	    } else {
+		    res += '.'
+        }
+    }
+
+    res += componentPath
+
+    return res
+}
+
+function getComponentName(componentPath) {
+  const componentPathArr = componentPath.split('/')
+  const componentName = componentPathArr[componentPathArr.length - 1]
+
+  return componentName
+}
+
+function createDirectory(componentPath) {
+  exec('mkdir ' + componentPath, (err, stdout) => {
     if (err) { throw err };
   });
 }
@@ -36,6 +59,8 @@ function createPjson(action, subDir, template) {
 
 export {
 	createDirectory,
+	getComponentPath,
+    getComponentName,
 	createFiles,
 	writeToFile,
 	createPjson

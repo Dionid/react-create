@@ -2,7 +2,7 @@ const
   args = process.argv.slice(2),
 
   // Component arguments
-  withFolder = (args.includes('--dir')) || (args.includes('-d')),
+  // withFolder = (args.includes('--dir')) || (args.includes('-d')),
   withJSX = args.includes('--jsx'),
   withPkg = (args.includes('--pkg')) || (args.includes('-p')),
   es5 = args.includes('--es5'),
@@ -11,7 +11,7 @@ const
 
 // Make variables accessible globally
 export {
-  withFolder,
+  // withFolder,
   withJSX,
   withPkg,
   es5,

@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "clean": "rimraf lib",
-    "build": "npm run clean && babel src --out-dir lib",
+    "build": "npm run clean && babel src --out-dir lib && npm link",
     "start": "node server.js"
   },
   "repository": {
@@ -32,5 +32,8 @@
     "eslint": "^1.10.3",
     "express": "^4.13.4",
     "rimraf": "^2.5.2"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
   }
 }

@@ -1,20 +1,29 @@
 // Constants
-import { withJSX, withFolder, withPkg } from '../constants/env_vars';
+import { withJSX, withPkg } from '../constants/env_vars';
 import { styleExts, createFile } from '../constants';
 
 // Used for reading and writing component files
-import { createDirectory, createFiles, writeToFile, createPjson } from '../utils/file';
+import {
+	createDirectory,
+	getComponentPath,
+	getComponentName,
+	createFiles,
+	writeToFile,
+	createPjson } from '../utils/file';
 
 // Loading in appropriate templates
 import compTmpl from '../templates/component';
 import pjTmpl from '../templates/pjson';
 
-const
-  args = process.argv.slice(2),
-  component = args[1],
-  extensions = [];
+const args = process.argv.slice(2)
+// const componentPath = args[1]
+const componentPath = getComponentPath(args[1])
+const componentName = getComponentName(componentPath)
+const extensions = []
+let subDir = ''
 
-let subDir = '';
+console.log(componentPath)
+console.log(componentName)
 
 /**
   Grabbing style extension from arguments and adding to
@@ -35,16 +44,16 @@ withJSX ? extensions.push('.jsx') : extensions.push('.js');
 addCssExtension(args, styleExts, extensions);
 
 // Creating component folder
-if (withFolder) {
-  createDirectory(component);
-  subDir = component + '/';
-}
+// if (withFolder) {
+createDirectory(componentPath);
+// subDir = component + '/';
+// }
 
 // Loop through to create necessary files
-createFiles(extensions, createFile, subDir, component, compTmpl, writeToFile);
+// createFiles(extensions, createFile, subDir, component, compTmpl, writeToFile);
 
 
 // Creating package.json pointing to component (via main) if needed
-if (withPkg) {
-  createPjson(createFile, subDir, pjTmpl);
-}
+// if (withPkg) {
+//   createPjson(createFile, subDir, pjTmpl);
+// }
