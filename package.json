@@ -6,6 +6,7 @@
     "lint": "eslint src",
     "clean": "rimraf lib",
     "build": "npm run clean && babel src --out-dir lib && npm link",
+    "create": "rimraf TestComp && node ./lib/index.js comp",
     "start": "node server.js"
   },
   "repository": {

@@ -1,9 +1,12 @@
 import { es5, isEntry } from '../constants/env_vars';
 import * as deps from '../constants/npm-imports';
+import {
+	getComponentPath,
+	getComponentName, } from '../utils/file';
 
-const
-  args = process.argv.slice(2),
-  component = args[1];
+const args = process.argv.slice(2)
+const componentPath = getComponentPath(args[1])
+const componentName = getComponentName(componentPath)
 
 let template,reactImports, compBody, compEnd = ``;
 
@@ -13,10 +16,10 @@ if (es5) {
   compBody =
 `
 
-var ${component} = React.createClass({
+var ${componentName} = React.createClass({
   render: function() {
     return (
-      <div className="${component.toLowerCase()}">
+      <div>
         { this.props.children }
       </div>
     )
@@ -24,27 +27,34 @@ var ${component} = React.createClass({
 })
 `
 }
-
 // Or ES6 Component
 else {
   reactImports = deps.React[0];
   compBody =
 `
+import styles from './${componentName}.pcss'
 
-export default class ${component} extends Component {
-  render() {
-    return (
-      <div className="${component.toLowerCase()}">
-        { this.props.children }
-      </div>
-    )
-  }
+class ${componentName} extends Component {
+
+    static propTypes = {
+    
+    }
+    
+    render() {
+        return (
+            <div>
+            
+            </div>
+      )
+    }
 }
+
+export default ${componentName}
 `
 }
 
 
-// Mounts component to the DOM
+// Mounts componentName to the DOM
 if (isEntry) {
   if (es5) {
     reactImports +=
@@ -59,21 +69,22 @@ ${deps.ReactDOM[0]}`
 
   compEnd +=
 `
-ReactDOM.render(<${component}/>, document.getElementById('app'));
+ReactDOM.render(<${componentName}/>, document.getElementById('app'));
 `
 }
 else {
   if (es5) {
-    compEnd +=
-  `
-module.exports = ${component};
-  `
+    compEnd += `
+module.exports = ${componentName};
+  `;
   }
 }
 
-template = reactImports + compBody + compEnd;
+template = reactImports + compBody + compEnd
 
-
+// function createTemplate() {
+//
+// }
 
 // Export component
 export default template;

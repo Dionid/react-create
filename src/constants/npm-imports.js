@@ -4,6 +4,6 @@ export const ReactDOM = [
 ]
 
 export const React = [
-  `import React, { Component } from 'react';`,
-  `var React = require('react');`
+  `import React, { Component, PropTypes } from 'react'`,
+    `var React = require('react');`
 ]
